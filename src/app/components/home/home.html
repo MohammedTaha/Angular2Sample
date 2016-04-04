@@ -1,0 +1,29 @@
+<div>
+    
+    <h3>Selected Activity result details</h3>
+    {{selectedActivityResult || "--"}}
+    
+    <br/>
+    <br/>
+    <table id="table_alertInfo">
+       <thead>
+            <tr>
+                <th>Date - Time</th>
+                <th>Status</th>
+                <th>Alert Subject</th>
+                <th>Driver</th>
+                <th>Vehicles</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr *ngFor = "#alert of activityResults; #i = index;" (click)="handleClick(alert, i)">
+                <td>{{alert.createdTimestamp.value}}</td>
+                <td> - </td>
+                <td>{{alert.subject}}</td>
+                <td> - </td>
+                <td> - </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
