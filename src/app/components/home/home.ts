@@ -11,18 +11,26 @@ import 'rxjs/Rx';
   pipes: []
 })
 export class Home {
-  public activityResults;  
+  public activityResults;
   public selectedActivityResult;
   constructor(private http : Http) {
       this.loadJSON();
   }
-  
-  
+
+
   loadJSON(){
       this.http.get("../../../ListOfAAResponse.json")
       .map(res => res.json())
-      .subscribe( (res) => {
-        this.activityResults = res && res.activityAlert ? res.activityAlert : [];
+      .subscribe( (res:any) => {
+
+          if(res.activityAlert && res.activityAlert.length){
+            res.activityAlert.forEach((aa)=>{
+              aa.status = aa["@status"];
+              delete aa["@status"];
+            });
+            this.activityResults = res.activityAlert;
+          }
+        //this.activityResults = res && res.activityAlert ? res.activityAlert : [];
       });
   }
 
