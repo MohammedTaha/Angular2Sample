@@ -1,5 +1,6 @@
 import {Component} from 'angular2/core';
 import {Http} from 'angular2/http';
+import {Router} from 'angular2/router';
 import 'rxjs/Rx';
 
 @Component({
@@ -12,12 +13,9 @@ import 'rxjs/Rx';
 })
 export class Home {
   public activityResults;
-  public selectedActivityResult;
-  constructor(private http : Http) {
+  constructor(private http : Http, private router : Router) {
       this.loadJSON();
   }
-
-
   loadJSON(){
       this.http.get("../../../ListOfAAResponse.json")
       .map(res => res.json())
@@ -30,11 +28,10 @@ export class Home {
             });
             this.activityResults = res.activityAlert;
           }
-        //this.activityResults = res && res.activityAlert ? res.activityAlert : [];
       });
   }
 
-  handleClick(activityResultObj, index){
-      this.selectedActivityResult = JSON.stringify(this.activityResults[index]);
+  handleClick(index){
+    this.router.parent.navigate(["Details", {index: index}]);
   }
 }
